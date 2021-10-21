@@ -13,6 +13,7 @@
 		BA3204B32710C5840062C490 /* SearhPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA3204B22710C5840062C490 /* SearhPresenter.swift */; };
 		BA3204B62710CA060062C490 /* SearchBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA3204B52710CA060062C490 /* SearchBuilder.swift */; };
 		CA76F298272185830051A111 /* AppDetailVersionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA76F297272185830051A111 /* AppDetailVersionView.swift */; };
+		CABB70B02721A96400CCA7B8 /* AppDetailVersionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CABB70AF2721A96400CCA7B8 /* AppDetailVersionViewController.swift */; };
 		E0E1D2932034A3350011E01A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0E1D2922034A3350011E01A /* AppDelegate.swift */; };
 		E0E1D2952034A3350011E01A /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0E1D2942034A3350011E01A /* SearchViewController.swift */; };
 		E0E1D29A2034A3350011E01A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E0E1D2992034A3350011E01A /* Assets.xcassets */; };
@@ -43,6 +44,7 @@
 		BA3204B22710C5840062C490 /* SearhPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearhPresenter.swift; sourceTree = "<group>"; };
 		BA3204B52710CA060062C490 /* SearchBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchBuilder.swift; sourceTree = "<group>"; };
 		CA76F297272185830051A111 /* AppDetailVersionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDetailVersionView.swift; sourceTree = "<group>"; };
+		CABB70AF2721A96400CCA7B8 /* AppDetailVersionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDetailVersionViewController.swift; sourceTree = "<group>"; };
 		E0E1D28F2034A3350011E01A /* iOSArchitecturesDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iOSArchitecturesDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E0E1D2922034A3350011E01A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		E0E1D2942034A3350011E01A /* SearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
@@ -253,6 +255,7 @@
 			children = (
 				E0E1D3D0203C48D70011E01A /* AppDetailViewController.swift */,
 				BA3204AF2710BBF30062C490 /* AppDetailHeaderViewController.swift */,
+				CABB70AF2721A96400CCA7B8 /* AppDetailVersionViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -435,6 +438,7 @@
 				E0E1D3D4203C4AA50011E01A /* UIColor+Extensions.swift in Sources */,
 				BA3204AE2710B5000062C490 /* AppDetailHeaderView.swift in Sources */,
 				E0E1D3D1203C48D70011E01A /* AppDetailViewController.swift in Sources */,
+				CABB70B02721A96400CCA7B8 /* AppDetailVersionViewController.swift in Sources */,
 				E0E1D358203ADC590011E01A /* NetworkManager.swift in Sources */,
 				BA3204B32710C5840062C490 /* SearhPresenter.swift in Sources */,
 				E0E1D39C203AE6420011E01A /* ITunesSong.swift in Sources */,

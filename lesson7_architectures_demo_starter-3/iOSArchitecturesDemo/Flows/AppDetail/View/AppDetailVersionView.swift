@@ -64,6 +64,26 @@ class AppDetailVersionView: UIView {
         self.addSubview(dateOfReleaseLabel)
         self.addSubview(updatesInformationLabel)
         
-        
+        NSLayoutConstraint.activate([
+            whatsNewLabel.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: 10),
+            whatsNewLabel.leftAnchor.constraint(equalTo: leftAnchor, constant: 10),
+            whatsNewLabel.widthAnchor.constraint(equalToConstant: 150),
+            whatsNewLabel.heightAnchor.constraint(equalToConstant: 110),
+            
+            dateOfReleaseLabel.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: 10),
+            dateOfReleaseLabel.leftAnchor.constraint(equalTo: whatsNewLabel.rightAnchor, constant: 20),
+            dateOfReleaseLabel.widthAnchor.constraint(equalToConstant: 100),
+            dateOfReleaseLabel.heightAnchor.constraint(equalToConstant: 50),
+            
+            actualVersionLabel.topAnchor.constraint(equalTo: dateOfReleaseLabel.bottomAnchor, constant: 10),
+            actualVersionLabel.leftAnchor.constraint(equalTo: whatsNewLabel.rightAnchor, constant: 20),
+            actualVersionLabel.widthAnchor.constraint(equalToConstant: 100),
+            actualVersionLabel.heightAnchor.constraint(equalToConstant: 50),
+            
+            updatesInformationLabel.topAnchor.constraint(equalTo: whatsNewLabel.bottomAnchor, constant: 20),
+            updatesInformationLabel.leftAnchor.constraint(equalTo: leftAnchor, constant: 20),
+            updatesInformationLabel.widthAnchor.constraint(equalToConstant: 250),
+            updatesInformationLabel.heightAnchor.constraint(equalToConstant: 150),
+        ])
     }
 }

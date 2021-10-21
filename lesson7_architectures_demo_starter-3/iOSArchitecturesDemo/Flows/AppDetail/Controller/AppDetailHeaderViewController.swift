@@ -12,6 +12,7 @@ class AppDetailHeaderViewController: UIViewController {
     
     private let app: ITunesApp
     private let imageDownLoader = ImageDownloader()
+ //   private let appDetailVersionViewController = AppDetailVersionViewController(app: app)
     
     private var appDetailHeaderView: AppDetailHeaderView {
         return self.view as! AppDetailHeaderView
@@ -28,6 +29,7 @@ class AppDetailHeaderViewController: UIViewController {
     
     override func loadView() {
         self.view = AppDetailHeaderView()
+     //   self.addChild(appDetailVersionViewController)
     }
     
     override func viewDidLoad() {
@@ -42,6 +44,7 @@ class AppDetailHeaderViewController: UIViewController {
         appDetailHeaderView.titleLabel.text = app.appName
         appDetailHeaderView.subTitleLabel.text = app.company
         appDetailHeaderView.ratingLabel.text = app.averageRating.flatMap { "\($0)" }
+        
     }
     
     private func downloadImage() {

@@ -45,4 +45,25 @@ class AppDetailVersionView: UIView {
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
+    
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        
+        configureUI()
+    }
+    
+    required init?(coder: NSCoder) {
+        super.init(coder: coder)
+        
+        configureUI()
+    }
+    
+    private func configureUI() {
+        self.addSubview(whatsNewLabel)
+        self.addSubview(actualVersionLabel)
+        self.addSubview(dateOfReleaseLabel)
+        self.addSubview(updatesInformationLabel)
+        
+        
+    }
 }

@@ -1,25 +1,26 @@
 //
-//  AppDetailHeaderViewController.swift
+//  SongDetailMainViewController.swift
 //  iOSArchitecturesDemo
 //
-//  Created by Veaceslav Chirita on 08.10.2021.
+//  Created by Denis Kazarin on 22.10.2021.
 //  Copyright © 2021 ekireev. All rights reserved.
 //
 
+
 import UIKit
 
-class AppDetailHeaderViewController: UIViewController {
+class SongDetailMainViewController: UIViewController {
     
-    private let app: ITunesApp
+    private let song: ITunesSong
     private let imageDownLoader = ImageDownloader()
  //   private let appDetailVersionViewController = AppDetailVersionViewController(app: app)
     
-    private var appDetailHeaderView: AppDetailHeaderView {
-        return self.view as! AppDetailHeaderView
+    private var songDetailView: SongDetailView {
+        return self.view as! SongDetailView
     }
     
-    init(app: ITunesApp) {
-        self.app = app
+    init(song: ITunesSong) {
+        self.song = song
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -28,7 +29,7 @@ class AppDetailHeaderViewController: UIViewController {
     }
     
     override func loadView() {
-        self.view = AppDetailHeaderView()
+        self.view = SongDetailView()
     }
     
     override func viewDidLoad() {
@@ -40,19 +41,17 @@ class AppDetailHeaderViewController: UIViewController {
     private func fillData() {
         downloadImage()
         
-        appDetailHeaderView.titleLabel.text = app.appName
-        appDetailHeaderView.subTitleLabel.text = app.company
-        appDetailHeaderView.ratingLabel.text = app.averageRating.flatMap { "\($0)" }
-        
+        songDetailView.trackLabel.text = song.trackName
+        songDetailView.artistLabel.text = song.artistName
     }
     
     private func downloadImage() {
-        guard let url = app.iconUrl else { return }
+        guard let url = song.artwork else { return }
         imageDownLoader.getImage(fromUrl: url) { [weak self] image, error in
             guard let self = self else { return }
             
             DispatchQueue.main.async {
-                self.appDetailHeaderView.imageView.image = image
+                self.songDetailView.imageView.image = image
             }
         }
     }

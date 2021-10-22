@@ -9,7 +9,8 @@
 import UIKit
 
 protocol SearchViewInput: AnyObject {
-    var searchResults: [ITunesApp] { get set }
+    var searchAppResults: [ITunesApp] { get set }
+    var searchSongResults: [ITunesSong] { get set }
     
     func showError(error: Error)
     func showNoResults()
@@ -20,11 +21,13 @@ protocol SearchViewInput: AnyObject {
 protocol SearchViewOutput: AnyObject {
     func viewDidSearch(with query: String)
     func viewDidSelectApp(app: ITunesApp)
+    func viewDidSelectSong(song: ITunesSong)
 }
 
 class SearchPresenter {
     weak var viewInput: (UIViewController & SearchViewInput)?
     private let searchService = ITunesSearchService()
+    
     
     
     private func requestApps(with query: String) {
@@ -38,7 +41,26 @@ class SearchPresenter {
                         return
                     }
                     self.viewInput?.hideNoResults()
-                    self.viewInput?.searchResults = apps
+                    self.viewInput?.searchAppResults = apps
+                }
+                .withError { (error) in
+                    self.viewInput?.showError(error: error)
+                }
+        }
+    }
+    
+    private func requestSongs(with query: String) {
+        self.searchService.getSongs(forQuery: query) { [weak self] result in
+            guard let self = self else { return }
+            self.viewInput?.throbber(show: false)
+            result
+                .withValue { songs in
+                    guard !songs.isEmpty else {
+                        self.viewInput?.showNoResults()
+                        return
+                    }
+                    self.viewInput?.hideNoResults()
+                    self.viewInput?.searchSongResults = songs
                 }
                 .withError { (error) in
                     self.viewInput?.showError(error: error)
@@ -50,17 +72,33 @@ class SearchPresenter {
         let appDetailViewController = AppDetailViewController(app: app)
         viewInput?.navigationController?.pushViewController(appDetailViewController, animated: true)
     }
+    
+    private func openSongDetails(with song: ITunesSong) {
+        let songDetailViewController = SongDetailViewController(song: song)
+        viewInput?.navigationController?.pushViewController(songDetailViewController, animated: true)
+    }
 }
 
 extension SearchPresenter: SearchViewOutput {
+    
     func viewDidSearch(with query: String) {
         viewInput?.throbber(show: true)
-        requestApps(with: query)
+        
+        if SearchingParameters.shared.segmentIndex == 0 {
+            requestApps(with: query)
+        } else {
+            requestSongs(with: query)
+        }
     }
     
     func viewDidSelectApp(app: ITunesApp) {
         openAppDetails(with: app)
     }
+    
+    func viewDidSelectSong(song: ITunesSong) {
+        openSongDetails(with: song)
+    }
+    
     
     
 }

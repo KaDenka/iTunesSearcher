@@ -13,6 +13,7 @@ final class SearchView: UIView {
     // MARK: - Subviews
     
     let searchBar = UISearchBar()
+    let switcher = UISegmentedControl()
     let tableView = UITableView()
     let emptyResultView = UIView()
     let emptyResultLabel = UILabel()
@@ -34,6 +35,7 @@ final class SearchView: UIView {
     private func configureUI() {
         self.backgroundColor = .white
         self.addSearchBar()
+        self.addSwitcher()
         self.addTableView()
         self.addEmptyResultView()
         self.setupConstraints()
@@ -43,6 +45,14 @@ final class SearchView: UIView {
         self.searchBar.translatesAutoresizingMaskIntoConstraints = false
         self.searchBar.searchBarStyle = .minimal
         self.addSubview(self.searchBar)
+    }
+    
+    private func addSwitcher() {
+        self.switcher.translatesAutoresizingMaskIntoConstraints = false
+        self.switcher.insertSegment(withTitle: "Apps", at: 0, animated: true)
+        self.switcher.insertSegment(withTitle: "Songs", at: 1, animated: true)
+        self.switcher.selectedSegmentIndex = 0
+        self.addSubview(self.switcher)
     }
     
     private func addTableView() {
@@ -77,12 +87,16 @@ final class SearchView: UIView {
             self.searchBar.leadingAnchor.constraint(equalTo: safeArea.leadingAnchor),
             self.searchBar.trailingAnchor.constraint(equalTo: safeArea.trailingAnchor),
             
-            self.tableView.topAnchor.constraint(equalTo: self.searchBar.bottomAnchor),
+            self.switcher.topAnchor.constraint(equalTo: self.searchBar.bottomAnchor),
+            self.switcher.leadingAnchor.constraint(equalTo: safeArea.leadingAnchor),
+            self.switcher.trailingAnchor.constraint(equalTo: safeArea.trailingAnchor),
+            
+            self.tableView.topAnchor.constraint(equalTo: self.switcher.bottomAnchor),
             self.tableView.leadingAnchor.constraint(equalTo: safeArea.leadingAnchor),
             self.tableView.trailingAnchor.constraint(equalTo: safeArea.trailingAnchor),
             self.tableView.bottomAnchor.constraint(equalTo: safeArea.bottomAnchor),
             
-            self.emptyResultView.topAnchor.constraint(equalTo: self.searchBar.bottomAnchor),
+            self.emptyResultView.topAnchor.constraint(equalTo: self.switcher.bottomAnchor),
             self.emptyResultView.leadingAnchor.constraint(equalTo: safeArea.leadingAnchor),
             self.emptyResultView.trailingAnchor.constraint(equalTo: safeArea.trailingAnchor),
             self.emptyResultView.bottomAnchor.constraint(equalTo: safeArea.bottomAnchor),

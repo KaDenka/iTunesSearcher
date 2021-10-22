@@ -29,7 +29,6 @@ class AppDetailHeaderViewController: UIViewController {
     
     override func loadView() {
         self.view = AppDetailHeaderView()
-     //   self.addChild(appDetailVersionViewController)
     }
     
     override func viewDidLoad() {

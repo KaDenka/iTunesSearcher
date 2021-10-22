@@ -13,6 +13,7 @@ final class AppDetailViewController: UIViewController {
     public var app: ITunesApp
     
     lazy var headerViewController = AppDetailHeaderViewController(app: app)
+    lazy var versionViewController = AppDetailVersionViewController(app: app)
     
     private let imageDownloader = ImageDownloader()
     
@@ -53,7 +54,7 @@ final class AppDetailViewController: UIViewController {
         view.backgroundColor = .white
         
         addHeaderViewController()
-        addDescriptionViewController()
+        addVersionViewController()
     }
     
     private func addHeaderViewController() {
@@ -70,22 +71,26 @@ final class AppDetailViewController: UIViewController {
         ])
     }
     
-    private func addDescriptionViewController() {
+    private func addVersionViewController() {
         //ДЗ добавить другие модули
         
-        let descriptionController = UIViewController()
+        self.addChild(versionViewController)
+        self.view.addSubview(versionViewController.view)
         
-        self.addChild(descriptionController)
-        self.view.addSubview(descriptionController.view)
+        versionViewController.didMove(toParent: self)
         
-        descriptionController.didMove(toParent: self)
+        versionViewController.view.translatesAutoresizingMaskIntoConstraints = false
         
-        descriptionController.view.translatesAutoresizingMaskIntoConstraints = false
+//        NSLayoutConstraint.activate([
+//            versionViewController.view.bottomAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.bottomAnchor),
+//            versionViewController.view.leftAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leftAnchor),
+//            versionViewController.view.rightAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.rightAnchor)
+//        ])
         
         NSLayoutConstraint.activate([
-            descriptionController.view.bottomAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.bottomAnchor),
-            descriptionController.view.leftAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leftAnchor),
-            descriptionController.view.rightAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.rightAnchor)
+            versionViewController.view.topAnchor.constraint(equalTo: self.headerViewController.view.safeAreaLayoutGuide.bottomAnchor),
+            versionViewController.view.leftAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leftAnchor),
+            versionViewController.view.rightAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.rightAnchor)
         ])
     }
 

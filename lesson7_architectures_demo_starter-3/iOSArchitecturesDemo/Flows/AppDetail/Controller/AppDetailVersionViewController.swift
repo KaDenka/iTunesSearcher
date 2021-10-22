@@ -26,7 +26,7 @@ class AppDetailVersionViewController: UIViewController {
     }
     
     override func loadView() {
-        self.view = AppDetailHeaderView()
+        self.view = AppDetailVersionView()
     }
     
     override func viewDidLoad() {
@@ -38,17 +38,20 @@ class AppDetailVersionViewController: UIViewController {
     private func fillData() {
         
         appDetailVersionView.updatesInformationLabel.text = app.releaseNotes
-        appDetailVersionView.actualVersionLabel.text = app.version
-        appDetailVersionView.dateOfReleaseLabel.text = "Should be date"
+        appDetailVersionView.actualVersionLabel.text = "Версия: " + (app.version ?? "")
+        appDetailVersionView.dateOfReleaseLabel.text = dateLoad()
     }
     
     private func dateLoad() -> String {
         guard let date = app.currentVersionReleaseDate else { return "" }
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "dd.MM.YY"
-        let stringDate = dateFormatter.string(from: date)
-        print(stringDate)
-        return stringDate
+        let dateFormatterGet = DateFormatter()
+        dateFormatterGet.dateFormat = "yyyy-MM-dd'T'HH:mm:ss'Z"
+
+        let dateFormatterPrint = DateFormatter()
+        dateFormatterPrint.dateFormat = "dd/MM/yyyy"
+
+        let dateInDate = dateFormatterGet.date(from: date)
+        return dateFormatterPrint.string(from: dateInDate!)
         
     }
     

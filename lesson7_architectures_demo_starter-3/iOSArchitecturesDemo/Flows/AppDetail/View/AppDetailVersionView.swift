@@ -82,7 +82,7 @@ class AppDetailVersionView: UIView {
             
             updatesInformationLabel.topAnchor.constraint(equalTo: actualVersionLabel.bottomAnchor, constant: 20),
             updatesInformationLabel.leftAnchor.constraint(equalTo: leftAnchor, constant: 20),
-            updatesInformationLabel.widthAnchor.constraint(equalToConstant: 250),
+            updatesInformationLabel.widthAnchor.constraint(equalToConstant: 350),
             updatesInformationLabel.heightAnchor.constraint(equalToConstant: 150),
         ])
     }

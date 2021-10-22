@@ -26,11 +26,11 @@ final class CellModelFactory {
                             subtitle: model.company,
                             rating: model.averageRating >>- { "\($0)" })
     }
-   
-        static func cellSongModel(from song: ITunesSong) -> SongCellModel {
-            return SongCellModel(track: song.trackName,
-                                artist: song.artistName
-                               )
+    
+    static func cellSongModel(from song: ITunesSong) -> SongCellModel {
+        return SongCellModel(track: song.trackName,
+                             artist: song.artistName
+        )
     }
     
 }

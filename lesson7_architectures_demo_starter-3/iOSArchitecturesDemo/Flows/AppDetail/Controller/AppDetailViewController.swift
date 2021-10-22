@@ -78,14 +78,7 @@ final class AppDetailViewController: UIViewController {
         self.view.addSubview(versionViewController.view)
         
         versionViewController.didMove(toParent: self)
-        
         versionViewController.view.translatesAutoresizingMaskIntoConstraints = false
-        
-//        NSLayoutConstraint.activate([
-//            versionViewController.view.bottomAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.bottomAnchor),
-//            versionViewController.view.leftAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leftAnchor),
-//            versionViewController.view.rightAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.rightAnchor)
-//        ])
         
         NSLayoutConstraint.activate([
             versionViewController.view.topAnchor.constraint(equalTo: self.headerViewController.view.safeAreaLayoutGuide.bottomAnchor),
@@ -94,20 +87,4 @@ final class AppDetailViewController: UIViewController {
         ])
     }
 
-    
-    
-//    private func configureNavigationController() {
-//        self.navigationController?.navigationBar.tintColor = UIColor.white;
-//        self.navigationItem.largeTitleDisplayMode = .never
-//    }
-    
-//    private func downloadImage() {
-//        guard let url = self.app?.iconUrl else { return }
-//        self.appDetailView.throbber.startAnimating()
-//        self.imageDownloader.getImage(fromUrl: url) { (image, error) in
-//            self.appDetailView.throbber.stopAnimating()
-//            guard let image = image else { return }
-//            self.appDetailView.imageView.image = image
-//        }
-//    }
 }

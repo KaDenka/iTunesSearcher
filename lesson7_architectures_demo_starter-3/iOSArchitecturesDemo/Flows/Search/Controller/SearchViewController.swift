@@ -19,13 +19,23 @@ final class SearchViewController: UIViewController {
     private let presenter: SearchViewOutput
     
     private let searchService = ITunesSearchService()
-    public var searchResults = [ITunesApp]() {
+    public var searchAppResults = [ITunesApp]() {
         didSet {
             searchView.tableView.isHidden = false
             searchView.tableView.reloadData()
             searchView.searchBar.resignFirstResponder()
         }
     }
+    
+    public var searchSongResults = [ITunesSong]() {
+        didSet {
+            searchView.tableView.isHidden = false
+            searchView.tableView.reloadData()
+            searchView.searchBar.resignFirstResponder()
+        }
+    }
+    
+    
     
     private struct Constants {
         static let reuseIdentifier = "reuseId"
@@ -100,18 +110,31 @@ final class SearchViewController: UIViewController {
 extension SearchViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return searchResults.count
+        if SearchingParameters.shared.segmentIndex == 0 {
+        return searchAppResults.count
+        } else { return searchSongResults.count }
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let dequeuedCell = tableView.dequeueReusableCell(withIdentifier: Constants.reuseIdentifier, for: indexPath)
+        if SearchingParameters.shared.segmentIndex == 0 {
         guard let cell = dequeuedCell as? AppCell else {
             return dequeuedCell
         }
-        let app = self.searchResults[indexPath.row]
-        let cellModel = AppCellModelFactory.cellModel(from: app)
-        cell.configure(with: cellModel)
-        return cell
+        let app = self.searchAppResults[indexPath.row]
+        let appCellModel = CellModelFactory.cellAppModel(from: app)
+            cell.configure(with: appCellModel)
+            return cell
+        } else {
+            guard let cell = dequeuedCell as? SongCell else {
+                return dequeuedCell
+            }
+            let song = self.searchSongResults[indexPath.row]
+            let songCellModel = CellModelFactory.cellSongModel(from: song)
+            cell.configure(with: songCellModel)
+            return cell
+        }
+       // cell.configure(with: cellModel)
     }
 }
 
@@ -120,11 +143,20 @@ extension SearchViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
-        let app = searchResults[indexPath.row]
+        if SearchingParameters.shared.segmentIndex == 0 {
+        let app = searchAppResults[indexPath.row]
         let appDetaillViewController = AppDetailViewController(app: app)
         appDetaillViewController.app = app
 //        navigationController?.pushViewController(appDetaillViewController, animated: true)
-        presenter.viewDidSelectApp(app: app)
+            presenter.viewDidSelectApp(app: app)
+        } else {
+            let song = searchSongResults[indexPath.row]
+            let songDetailViewController = SongDetailViewController(song: song)
+            songDetailViewController.song = song
+    //        navigationController?.pushViewController(appDetaillViewController, animated: true)
+            presenter.viewDidSelectSong(song: song)
+        }
+        
     }
 }
 
@@ -141,12 +173,13 @@ extension SearchViewController: UISearchBarDelegate {
             return
         }
 //        self.requestApps(with: query)
-        
+        SearchingParameters.shared.segmentIndex = self.searchView.switcher.selectedSegmentIndex
         presenter.viewDidSearch(with: query)
     }
 }
 
 extension SearchViewController: SearchViewInput {
+    
     func throbber(show: Bool) {
         UIApplication.shared.isNetworkActivityIndicatorVisible = show
     }

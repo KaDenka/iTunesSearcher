@@ -27,55 +27,58 @@ protocol SearchViewOutput: AnyObject {
 class SearchPresenter {
     weak var viewInput: (UIViewController & SearchViewInput)?
     private let searchService = ITunesSearchService()
+    let interactor: SearchInteractorInput
+    let router: SearchRouterInput
     
-    
-    
-    private func requestApps(with query: String) {
-        self.searchService.getApps(forQuery: query) { [weak self] result in
-            guard let self = self else { return }
-            self.viewInput?.throbber(show: false)
-            result
-                .withValue { apps in
-                    guard !apps.isEmpty else {
-                        self.viewInput?.showNoResults()
-                        return
-                    }
-                    self.viewInput?.hideNoResults()
-                    self.viewInput?.searchAppResults = apps
-                }
-                .withError { (error) in
-                    self.viewInput?.showError(error: error)
-                }
-        }
+    init(interactor: SearchInteractorInput, router: SearchRouterInput) {
+        self.interactor = interactor
+        self.router = router
     }
     
-    private func requestSongs(with query: String) {
-        self.searchService.getSongs(forQuery: query) { [weak self] result in
-            guard let self = self else { return }
-            self.viewInput?.throbber(show: false)
-            result
-                .withValue { songs in
-                    guard !songs.isEmpty else {
-                        self.viewInput?.showNoResults()
-                        return
-                    }
-                    self.viewInput?.hideNoResults()
-                    self.viewInput?.searchSongResults = songs
-                }
-                .withError { (error) in
-                    self.viewInput?.showError(error: error)
-                }
-        }
-    }
+//    private func requestApps(with query: String) {
+//        self.searchService.getApps(forQuery: query) { [weak self] result in
+//            guard let self = self else { return }
+//            self.viewInput?.throbber(show: false)
+//            result
+//                .withValue { apps in
+//                    guard !apps.isEmpty else {
+//                        self.viewInput?.showNoResults()
+//                        return
+//                    }
+//                    self.viewInput?.hideNoResults()
+//                    self.viewInput?.searchAppResults = apps
+//                }
+//                .withError { (error) in
+//                    self.viewInput?.showError(error: error)
+//                }
+//        }
+//    }
+//
+//    private func requestSongs(with query: String) {
+//        self.searchService.getSongs(forQuery: query) { [weak self] result in
+//            guard let self = self else { return }
+//            self.viewInput?.throbber(show: false)
+//            result
+//                .withValue { songs in
+//                    guard !songs.isEmpty else {
+//                        self.viewInput?.showNoResults()
+//                        return
+//                    }
+//                    self.viewInput?.hideNoResults()
+//                    self.viewInput?.searchSongResults = songs
+//                }
+//                .withError { (error) in
+//                    self.viewInput?.showError(error: error)
+//                }
+//        }
+//    }
     
     private func openAppDetails(with app: ITunesApp) {
-        let appDetailViewController = AppDetailViewController(app: app)
-        viewInput?.navigationController?.pushViewController(appDetailViewController, animated: true)
+        router.openAppDetails(with: app)
     }
     
     private func openSongDetails(with song: ITunesSong) {
-        let songDetailViewController = SongDetailViewController(song: song)
-        viewInput?.navigationController?.pushViewController(songDetailViewController, animated: true)
+        router.openSongDetails(with: song)
     }
 }
 
@@ -85,9 +88,44 @@ extension SearchPresenter: SearchViewOutput {
         viewInput?.throbber(show: true)
         
         if SearchingParameters.shared.segmentIndex == 0 {
-            requestApps(with: query)
+//            requestApps(with: query)
+            interactor.requestApps(with: query) { [weak self] result in
+                guard let self = self else { return }
+                self.viewInput?.throbber(show: false)
+                result
+                    .withValue { apps in
+                        guard !apps.isEmpty else {
+                            self.viewInput?.showNoResults()
+                            return
+                        }
+                        self.viewInput?.hideNoResults()
+                        self.viewInput?.searchAppResults = apps
+                    }
+                    .withError { (error) in
+                        self.viewInput?.showError(error: error)
+                    }
+            }
+            
+            
+            
         } else {
-            requestSongs(with: query)
+//            requestSongs(with: query)
+            interactor.requestSongs(with: query) { [weak self] result in
+                guard let self = self else { return }
+                self.viewInput?.throbber(show: false)
+                result
+                    .withValue { songs in
+                        guard !songs.isEmpty else {
+                            self.viewInput?.showNoResults()
+                            return
+                        }
+                        self.viewInput?.hideNoResults()
+                        self.viewInput?.searchSongResults = songs
+                    }
+                    .withError { (error) in
+                        self.viewInput?.showError(error: error)
+                    }
+            }
         }
     }
     

@@ -10,9 +10,13 @@ import UIKit
 
 class SearchBuilder {
     static func build() -> (UIViewController & SearchViewInput) {
-        let presenter = SearchPresenter()
+       
+        let interactor = SearchInreractor()
+        let router = SearchRouter()
+        let presenter = SearchPresenter(interactor: interactor, router: router)
         let viewController = SearchViewController(presenter: presenter)
         presenter.viewInput = viewController
+        router.viewController = viewController
         
         return viewController
     }
